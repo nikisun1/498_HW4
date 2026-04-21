@@ -1,0 +1,9 @@
+Q1: FoundationDB separates its architecture into a Transaction Management System (TMS) and a Storage System (SS) so each layer can scale and operate independently. The TMS handles transaction ordering, conflict detection, and commit coordination. The Storage System is responsible for storing key-value data durably and serving reads. This separation improves scalability, fault tolerance, and system modularity.
+
+Q2: Read-write conflicts are detected by the transaction management layer during the commit process. After a transaction is assigned a commit version, its read and write conflict ranges are checked against other committed transactions. If a conflict is found, the transaction is aborted to preserve serializability.
+
+Q3: The read version represents a consistent snapshot of the database that a transaction reads from. All reads in the transaction are performed as if they occurred at that single version, even if other writes are happening concurrently. This ensures strong consistency and repeatable reads within the transaction.
+
+Q4: Snapshot reads do not add read conflict ranges, so they do not cause conflicts with concurrent writes. In contrast, standard reads track conflict ranges and can cause the transaction to abort if data changes. Snapshot reads are useful when you want to read data without enforcing strict serializable guarantees on those reads.
+
+Q5: Recovery in FoundationDB is considered cheap because committed data is already replicated and stored by LogServers during normal operation. StorageServers continuously pull and apply updates, so they remain close to the latest state. This eliminates the need for expensive redo log replay during recovery, allowing the system to resume quickly after failures.
