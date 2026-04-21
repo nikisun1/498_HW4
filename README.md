@@ -6,5 +6,5 @@
 
 
 
-!\[Part 2.1 Output](hw4sc1.png)
+![Part 2.1 Output](./hw4sc1.png)
 
